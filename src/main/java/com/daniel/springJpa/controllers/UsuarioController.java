@@ -3,6 +3,9 @@ package com.daniel.springJpa.controllers;
 
 import com.daniel.springJpa.models.Usuario;
 import com.daniel.springJpa.service.UsuarioService;
+import com.daniel.springJpa.utils.JWTUtil;
+import de.mkammerer.argon2.Argon2;
+import de.mkammerer.argon2.Argon2Factory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,18 +19,45 @@ public class UsuarioController {
     @Autowired
     UsuarioService usuarioService;
 
+    @Autowired
+    JWTUtil jwtUtil;
+
     @GetMapping
-    public List<Usuario> listarUsuarios(){
+    public List<Usuario> listarUsuarios(@RequestHeader(value = "Authorization") String token){
+
+        //DEBEMOS VERIFICAR QUE EL TOKEN SEA EL CORRECTO
+        String idUsuario = jwtUtil.getKey(token); //extraer el id del usuario
+        if(!validarToken(token)){
+            return null; //devuelve una lista vacia
+        }
+
         return usuarioService.listarUsuarios();
     }
 
-    @PostMapping
-    public void insertarUsuario(@RequestBody Usuario usuario){ //Para convertir el Json a un objeto en Java
+    private boolean validarToken(String token){
+        String idUsuario = jwtUtil.getKey(token);
+        if(idUsuario != null){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    @PostMapping //al momento de hacer el registro
+    public void registrarUsuario(@RequestBody Usuario usuario){ //Para convertir el Json a un objeto en Java
+        //Para poder encryptar la contraseña
+        Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id); //
+        String hash = argon2.hash(1,1024,1,usuario.getPassword());
+        usuario.setPassword(hash); //vamos a dar la nueva contraseña ecriptada
+
         usuarioService.registrarUsuario(usuario);
     }
 
     @DeleteMapping(path = "/{id}") //Para poder eliminar con el id
-    public void eliminarUsuario(@PathVariable int id){
+    public void eliminarUsuario(@RequestHeader(value = "Authorization") String token ,@PathVariable int id){
+        if(!validarToken(token)){
+            return ; //devuelve una lista vacia
+        }
         usuarioService.eliminarUsuario(id);
     }
 

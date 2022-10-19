@@ -12,6 +12,6 @@ public interface IUsuarioService {
 
     void registrarUsuario(Usuario usuario);
 
-    boolean verificarEmailPassword(Usuario usuario);
+    Usuario obtenerUsuarioPorCredenciales(Usuario usuario);
 
 }

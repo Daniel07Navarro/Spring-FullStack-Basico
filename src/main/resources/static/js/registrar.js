@@ -30,7 +30,8 @@ async function registrarUsuarios(){
     // PARA HACER LLAMADOS TIPO POST:
     body: JSON.stringify(datos) //Agrega un objeto de Js y lo convierte a un String de Json
   });
-
+    alert('Registro correcto!!');
+    window.location.href= 'login.html'; //para que inicie sesion
 }
 
 

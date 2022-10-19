@@ -3,16 +3,25 @@ $(document).ready(function() {
 
     cargarUsuarios()
   $('#usuarios').DataTable(); //hace que seleccion esa tabla para que tenga paginacion
+  cargarNombreUsuario();
 });
 
+function cargarNombreUsuario(){
+    document.getElementById('txt-email-usuario').outerHTML = localStorage.email;
+}
+
+function getHeaders() {
+    return {
+     'Accept': 'application/json',
+     'Content-Type': 'application/json',
+     'Authorization': localStorage.token
+   };
+}
 async function cargarUsuarios(){
 
   const request = await fetch('api/usuarios', { //se comunica con el controller
     method: 'GET',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
+    headers: getHeaders()
     // PARA HACER LLAMADOS TIPO POST: body: JSON.stringify({a: 1, b: 'Textual content'})
   });
   const usuarios = await request.json();
@@ -43,10 +52,7 @@ async function eliminarUsuario(id){
 
     const request = await fetch('api/usuarios/' + id, { //se comunica con el controller
             method: 'DELETE',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
+            headers: getHeaders()
             // PARA HACER LLAMADOS TIPO POST: body: JSON.stringify({a: 1, b: 'Textual content'})
 
   });

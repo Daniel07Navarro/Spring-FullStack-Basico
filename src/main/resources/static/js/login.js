@@ -20,8 +20,10 @@ async function iniciarSesion(){
     body: JSON.stringify(datos) //Agrega un objeto de Js y lo convierte a un String de Json
   });
   const respuesta = await request.text();
-    if(respuesta == 'OK'){
-        window.location.href= "usuarios.html"
+    if(respuesta != 'FAIL'){
+        localStorage.token = respuesta;
+        localStorage.email = datos.email;
+        window.location.href= "usuarios.html"; //si es un OK te va a mandar a la pagina de usuarios
     }else{
         alert('Datos incorrectos');
     }
