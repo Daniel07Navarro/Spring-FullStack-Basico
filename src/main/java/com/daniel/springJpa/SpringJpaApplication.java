@@ -14,13 +14,11 @@ public class SpringJpaApplication implements CommandLineRunner {
 		SpringApplication.run(SpringJpaApplication.class, args);
 	}
 
-	/*
-	@Autowired
-	UsuarioRepo usuarioRepo;
-	*/
+
+
+
 	@Override
 	public void run(String... args) throws Exception {
-		//Usuario usuario = new Usuario("Juancho","Perez","juancho@gmail.com","995612348","*****");
-;		//usuarioRepo.save(usuario);
+
 	}
 }

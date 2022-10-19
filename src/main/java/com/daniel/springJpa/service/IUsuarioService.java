@@ -8,4 +8,10 @@ public interface IUsuarioService {
 
     List<Usuario> listarUsuarios();
 
+    void eliminarUsuario(int id);
+
+    void registrarUsuario(Usuario usuario);
+
+    boolean verificarEmailPassword(Usuario usuario);
+
 }
