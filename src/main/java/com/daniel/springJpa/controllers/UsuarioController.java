@@ -9,8 +9,8 @@ import de.mkammerer.argon2.Argon2Factory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController //maneja las url
 @RequestMapping(path = "api/usuarios")
@@ -21,6 +21,13 @@ public class UsuarioController {
 
     @Autowired
     JWTUtil jwtUtil;
+
+    /* OPCION PARA PODER BUSCAR POR USUARIOS
+    @GetMapping(path = "/buscarId")
+    public Optional<Usuario> buscarPorId(@PathVariable int id){
+        return usuarioService.buscarUsuarioPorId(id);
+    }
+    */
 
     @GetMapping
     public List<Usuario> listarUsuarios(@RequestHeader(value = "Authorization") String token){

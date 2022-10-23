@@ -3,6 +3,7 @@ package com.daniel.springJpa.service;
 import com.daniel.springJpa.models.Usuario;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IUsuarioService {
 
@@ -13,5 +14,7 @@ public interface IUsuarioService {
     void registrarUsuario(Usuario usuario);
 
     Usuario obtenerUsuarioPorCredenciales(Usuario usuario);
+
+    Optional<Usuario> buscarUsuarioPorId(int id);
 
 }

@@ -6,11 +6,11 @@ import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 //@Transactional
@@ -60,6 +60,12 @@ public class UsuarioService implements IUsuarioService{
 
 
 
+    }
+
+    @Override
+    public Optional<Usuario> buscarUsuarioPorId(int id) {
+        //Usuario usuario = usuarioRepo.findBy(id);
+        return usuarioRepo.findById(id);
     }
 
 }
